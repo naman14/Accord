@@ -4,6 +4,23 @@ Automated performance monitoring for Android
 
 Accord is a library for automating performance measurements that easily integrates with existing CI infrastructure.
 
+```
+Execution failed for task ':app:runAccordTest_92UAY04JJV'.
+> com.naman14.accord.library.AccordException: Performance tests failed:
+[Total memory usage exceeded threshold (threshold 102400 kb, found 420446 kb), Janky frames percent exceeded threshold (threshold 15.0 %, found 20.12 %)]
+```
+
+```
+Janky frames analysis passed (threshold 15.0 %, found 11.0 %)
+50th percentile frame time analysis passed (threshold 16 ms, found 12 ms)
+90th percentile frame time analysis passed (threshold 32 ms, found 26 ms)
+95th percentile frame time analysis passed (threshold 48 ms, found 30 ms)
+99th percentile frame time analysis passed (threshold 64 ms, found 47 ms)
+Memory usage analysis passed (threshold 100000 kb, found 57144 kb)
+```
+
+Demo of Accord being used in Grofers consumer app - https://youtu.be/nFiJXFoUwYM
+
 ## Install
 
 ## Gradle plugin
@@ -80,22 +97,6 @@ class MainTest {
 }
 ```
 
-## Test results
-
-```
-Execution failed for task ':app:runAccordTest_92UAY04JJV'.
-> com.naman14.accord.library.AccordException: Performance tests failed:
-[Total memory usage exceeded threshold (threshold 102400 kb, found 420446 kb), Janky frames percent exceeded threshold (threshold 15.0 %, found 20.12 %)]
-```
-
-```
-Janky frames analysis passed (threshold 15.0 %, found 11.0 %)
-50th percentile frame time analysis passed (threshold 16 ms, found 12 ms)
-90th percentile frame time analysis passed (threshold 32 ms, found 26 ms)
-95th percentile frame time analysis passed (threshold 48 ms, found 30 ms)
-99th percentile frame time analysis passed (threshold 64 ms, found 47 ms)
-Memory usage analysis passed (threshold 100000 kb, found 57144 kb)
-```
 
 ## Overview
 
@@ -151,5 +152,3 @@ configure<AccordExtension> {
 The sample app has a laggy recyclerview and a corresponding performance test. To see Accord in action, run `MainTest` in sample app from Android studio directly or run test using `./gradlew sample:accordTest`
 
 <img src="https://raw.githubusercontent.com/naman14/Accord/master/screen_sample_test.png">
-
-Also see a demo of Accord being used in Grofers consumer app - https://youtu.be/nFiJXFoUwYM
