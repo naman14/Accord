@@ -15,7 +15,7 @@ dependencies {
 }
 
 group = "com.naman14.accord"
-version = "0.2"
+version = "0.1"
 
 apply {
     from("https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle")

@@ -13,7 +13,7 @@ Plugin integrates well with using gradle from the command line and allows us to 
 ```
 buildscript {
     repositories {
-       ...
+       mavenCentral()
     }
     dependencies {
         classpath("com.naman14.accord:plugin:0.1")
@@ -38,7 +38,7 @@ androidTestImplementation 'com.naman14.accord:library:0.1'
 
 - Write espresso tests 
 - Annotate test classes with `@AccordTest`
-- Annotate individual tests with `@PerfTest` or `@TimeTest`
+- Annotate individual tests with `@PerfTest`
 - Create `AccordRule` with a set of tracers and the configuration to benchmark against.
 
 ```kotlin
@@ -77,18 +77,6 @@ class MainTest {
             }
         }
     }
-
-    /**
-     * benchmark the time to inflate a complex view
-     */
-    @TimeTest(
-        threshold = 200,
-        repeatCount = 5
-    )
-    @Test
-    fun mainTest2() {
-        inflater.inflate(R.layout.test_layout, root, false)
-    }
 }
 ```
 
@@ -98,11 +86,6 @@ class MainTest {
 Execution failed for task ':app:runAccordTest_92UAY04JJV'.
 > com.naman14.accord.library.AccordException: Performance tests failed:
 [Total memory usage exceeded threshold (threshold 102400 kb, found 420446 kb), Janky frames percent exceeded threshold (threshold 15.0 %, found 20.12 %)]
-```
-
-```
-Execution failed for task ':app:runAccordTest_92UAY04JJV'.
-> com.naman14.accord.library.AccordException: TimeTest failed. (threshold 200 ms, actual average time 234.0).Iteration count 5. Individual times [229, 227, 247, 215, 252]
 ```
 
 ```
@@ -117,9 +100,6 @@ Memory usage analysis passed (threshold 100000 kb, found 57144 kb)
 ## Overview
 
 `@PerfTest`: The tracers registered in the AccordRule will be run for these tests and will analyse the traces to mark the tests successful or not. Examples: Tests that automate the whole critical flow of the app. Tests that automate individual screens (scrolling a recyclerview, interacting with tabs etc)
-
-`@TimeTest`: Benchamrking a specific portion of code or UI interaction. 
-Example: Inflating a card in a recyclerview, performing a DB operation etc 
 
 `AccordConfig`: Configuration class for defining the thresholds and limits for your app. 
 
@@ -165,3 +145,9 @@ configure<AccordExtension> {
     instrumentationCommand = listOf("adb", "shell", "am", "instrument", "-w", "-e", ...)
 }
 ```
+
+## Sample
+
+The sample app has a laggy recyclerview and a corresponding performance test. To see Accord in action, run `MainTest` in sample app from Android studio directly or run test using `./gradlew app:accordTest`
+
+<img src="https://raw.githubusercontent.com/naman14/Accord/master/screen_sample_test.png">

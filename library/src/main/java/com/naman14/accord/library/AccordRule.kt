@@ -1,7 +1,6 @@
 package com.naman14.accord.library
 
 import com.naman14.accord.library.annotation.PerfTest
-import com.naman14.accord.library.annotation.TimeTest
 import com.naman14.accord.library.tracers.*
 import org.junit.rules.TestRule
 import org.junit.runner.Description
@@ -33,16 +32,6 @@ class AccordRule(
                 // run performance tracers on tests marked with PerfTest
                 description.getAnnotation(PerfTest::class.java)?.let {
                     performanceTest(base)
-                }
-                // run time logging for tests marked with TimeTest
-                description.getAnnotation(TimeTest::class.java)?.let { timeTest ->
-                    val threshold = timeTest.threshold
-                    val repeatCount = timeTest.repeatCount
-                    if (threshold == -1) throw AccordException(
-                        "Threshold must be provided" +
-                                "for TimeTest"
-                    )
-                    timeTest(base, threshold, repeatCount)
                 }
             }
         }
@@ -87,35 +76,5 @@ class AccordRule(
             throw AccordException("Performance tests failed $failedLogs")
         }
 
-    }
-
-    private fun timeTest(statement: Statement, threshold: Int, repeatCount: Int) {
-        val executionTimes = arrayListOf<Long>()
-        for (i in 1 until repeatCount + 1) {
-            log("Starting TimeTest iteration $i/$repeatCount")
-            val startTime = System.currentTimeMillis()
-            try {
-                statement.evaluate()
-            } catch (e: Exception) {
-                throw AccordException(e.message!!)
-            } finally {
-                val endTime = System.currentTimeMillis()
-                val time = endTime - startTime
-                executionTimes.add(time)
-            }
-        }
-        val averageTime = executionTimes.average()
-        if (averageTime > threshold) {
-            throw AccordException(
-                "TimeTest failed. (" +
-                        "threshold $threshold ms, actual average time $averageTime)." +
-                        "Iteration count $repeatCount. Individual times $executionTimes"
-            )
-        } else {
-            log(
-                "TimeTest passed. (" +
-                        "threshold $threshold ms, actual average time $averageTime)"
-            )
-        }
     }
 }
