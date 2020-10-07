@@ -21,7 +21,7 @@ plugins {
 android {
     compileSdkVersion(29)
     defaultConfig {
-        applicationId = "com.naman14.accord"
+        applicationId = "com.naman14.accord.sample"
         minSdkVersion(21)
         targetSdkVersion(29)
         versionCode = 1
@@ -57,7 +57,7 @@ dependencies {
 plugins.apply("com.naman14.accord")
 
 configure<AccordExtension> {
-    testApplicationId = "com.naman14.accord.test"
+    testApplicationId = "com.naman14.accord.sample.test"
     preTestTasks = listOf("installDebug")
 }
 

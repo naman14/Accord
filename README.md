@@ -2,7 +2,7 @@
 
 Automated performance monitoring for Android
 
-Accord is a library for benchmarking and automating performance measurements that easily integrates with existing CI infrastructure.
+Accord is a library for automating performance measurements that easily integrates with existing CI infrastructure.
 
 ## Install
 
@@ -118,7 +118,7 @@ apply plugin: 'com.naman14.accord'
 
 accord {
     //required to be either set in defaultConfig or here to run instrumentation
-    testApplicationId 'com.grofers.customerapp.staging.test'
+    testApplicationId 'com.naman14.accord.sample.test'
 
     //tasks that should run before running the instrymentation
     preTestTasks = ['assembleDevDebug', 'assembleDevDebugAndroidTest', 'installDevDebug', 'installDevDebugAndroidTest']
@@ -139,7 +139,7 @@ import com.naman14.accord.plugin.AccordExtension
 plugins.apply("com.naman14.accord")
 
 configure<AccordExtension> {
-    testApplicationId = "com.grofers.customerapp.staging.test"
+    testApplicationId = "com.naman14.accord.sample.test"
     preTestTasks = listOf("assembleDevDebug", "assembleDevDebugAndroidTest", "installDevDebug", "installDevDebugAndroidTest")
     postTestTasks = listOf("uninstallAll")
     instrumentationCommand = listOf("adb", "shell", "am", "instrument", "-w", "-e", ...)
@@ -148,6 +148,8 @@ configure<AccordExtension> {
 
 ## Sample
 
-The sample app has a laggy recyclerview and a corresponding performance test. To see Accord in action, run `MainTest` in sample app from Android studio directly or run test using `./gradlew app:accordTest`
+The sample app has a laggy recyclerview and a corresponding performance test. To see Accord in action, run `MainTest` in sample app from Android studio directly or run test using `./gradlew sample:accordTest`
 
 <img src="https://raw.githubusercontent.com/naman14/Accord/master/screen_sample_test.png">
+
+Also see a demo of Accord being used in Grofers consumer app - https://youtu.be/nFiJXFoUwYM

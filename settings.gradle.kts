@@ -1,1 +1,1 @@
-include( "plugin", "library", "app")
+include( "plugin", "library", "sample")
